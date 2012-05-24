@@ -1,7 +1,6 @@
 package de.scandio.dresscode;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
+import java.lang.reflect.*;
 
 /**
  * TODO: description
@@ -12,6 +11,10 @@ public class FormProxy implements InvocationHandler {
 
     @Override
     public Object invoke(Object o, Method method, Object[] objects) throws Throwable {
-        return null;  // TODO
+        ParameterizedType genericReturnType = (ParameterizedType) method.getGenericReturnType();
+        Class inputClass = (Class) genericReturnType.getActualTypeArguments()[0];
+
+        Constructor constructor =  method.getReturnType().getConstructor(Input.class);
+        return constructor.newInstance(inputClass.newInstance());
     }
 }

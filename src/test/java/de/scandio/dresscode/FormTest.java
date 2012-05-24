@@ -1,5 +1,6 @@
 package de.scandio.dresscode;
 
+import de.scandio.dresscode.inputs.IntegerInput;
 import org.junit.Test;
 
 
@@ -18,8 +19,8 @@ public class FormTest {
     @Test
     public void testGetValue() throws Exception {
         ArticleForm form = Dresscode.create(ArticleForm.class);
-        Field<Integer> numberField = form.getNumber();
+        Field<IntegerInput> numberField = form.getNumber();
         numberField.setRaw("42");
-        Integer number = numberField.getValue();
+        Integer number = numberField.getInput().getValue();
     }
 }

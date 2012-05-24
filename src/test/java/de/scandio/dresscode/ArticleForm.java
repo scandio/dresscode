@@ -1,5 +1,8 @@
 package de.scandio.dresscode;
 
+import de.scandio.dresscode.inputs.IntegerInput;
+import de.scandio.dresscode.inputs.TextInput;
+
 /**
  * TODO: description
  *
@@ -7,7 +10,7 @@ package de.scandio.dresscode;
  */
 public interface ArticleForm extends Form {
 
-    Field<String> getTitle();
+    Field<TextInput> getTitle();
 
-    Field<Integer> getNumber();
+    Field<IntegerInput> getNumber();
 }

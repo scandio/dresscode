@@ -5,12 +5,12 @@ package de.scandio.dresscode;
  *
  * @author Georg Schmidl <georg.schmidl@scandio.de>
  */
-public class Field<T> {
+public class Field<T extends Input> {
 
-    Input<T> input;
+    T input;
     String raw;
 
-    public Field(Input<T> input) {
+    public Field(T input) {
         this.input = input;
     }
 
@@ -22,7 +22,7 @@ public class Field<T> {
         this.raw = raw;
     }
 
-    public T getValue() {
-        return input.getValue();
+    public T getInput() {
+        return input;
     }
 }
