@@ -7,5 +7,7 @@ package de.scandio.dresscode;
  */
 public interface ArticleForm extends Form {
 
-    Field<TextInput> getTitle();
+    Field<String> getTitle();
+
+    Field<Integer> getNumber();
 }

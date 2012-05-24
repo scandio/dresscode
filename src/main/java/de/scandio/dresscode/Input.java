@@ -5,5 +5,11 @@ package de.scandio.dresscode;
  *
  * @author Georg Schmidl <georg.schmidl@scandio.de>
  */
-public class Input {
+public class Input<T> {
+
+    private T value;
+
+    public T getValue() {
+        return value;
+    }
 }
