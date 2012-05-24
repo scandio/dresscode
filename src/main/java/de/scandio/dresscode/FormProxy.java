@@ -23,8 +23,19 @@ public class FormProxy implements InvocationHandler {
     public Object invoke(Object o, Method method, Object[] objects) throws Throwable {
         if(method.getName().startsWith("get")) {
             return handleGetter(method);
+        } else if (method.getName().equals("isValid")) {
+            return isValid();
         }
         return null;
+    }
+
+    protected boolean isValid() {
+        for (Object field: this.fieldMap.values()) {
+            if (!((Field) field).isValid()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     protected Object handleGetter(Method method) throws Exception{

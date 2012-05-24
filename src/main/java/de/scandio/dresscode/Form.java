@@ -6,5 +6,5 @@ package de.scandio.dresscode;
  * @author Georg Schmidl <georg.schmidl@scandio.de>
  */
 public interface Form {
-
+    boolean isValid();
 }

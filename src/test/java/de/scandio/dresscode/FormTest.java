@@ -66,6 +66,7 @@ public class FormTest {
 
         ArticleForm form = Dresscode.fromRequest(ArticleForm.class, request);
 
+        assertEquals(true, form.isValid());
         assertEquals("Test Title", form.getTitle().getInput().getValue());
         assertEquals(new Integer(42), form.getNumber().getInput().getValue());
     }
