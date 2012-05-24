@@ -3,9 +3,15 @@ package de.scandio.dresscode;
 import de.scandio.dresscode.inputs.IntegerInput;
 import org.junit.Test;
 
+import javax.servlet.ServletRequest;
+import java.util.HashMap;
+import java.util.Map;
+
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 /**
@@ -47,5 +53,20 @@ public class FormTest {
 
         numberField.setRaw("foo");
         assertFalse(numberField.isValid());
+    }
+
+    @Test
+    public void testFromRequest() throws Exception{
+        Map<String, String[]> params = new HashMap<String, String[]>();
+        params.put("title", new String[] {"Test Title"});
+        params.put("number", new String[] {"42"});
+
+        ServletRequest request = mock(ServletRequest.class);
+        when(request.getParameterMap()).thenReturn(params);
+
+        ArticleForm form = Dresscode.fromRequest(ArticleForm.class, request);
+
+        assertEquals("Test Title", form.getTitle().getInput().getValue());
+        assertEquals(new Integer(42), form.getNumber().getInput().getValue());
     }
 }
