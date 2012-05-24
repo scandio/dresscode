@@ -1,7 +1,7 @@
 package de.scandio.dresscode;
 
-import de.scandio.dresscode.inputs.IntegerInput;
-import de.scandio.dresscode.inputs.TextInput;
+import de.scandio.dresscode.validators.IntegerValidator;
+import de.scandio.dresscode.validators.TextValidator;
 
 /**
  * TODO: description
@@ -10,7 +10,9 @@ import de.scandio.dresscode.inputs.TextInput;
  */
 public interface ArticleForm extends Form {
 
-    Field<TextInput> getTitle();
+    Field<String, TextValidator> getTitle();
 
-    Field<IntegerInput> getNumber();
+    Field<Integer, IntegerValidator> getNumber();
+
+    ListField<Integer, IntegerValidator> getNumbers();
 }

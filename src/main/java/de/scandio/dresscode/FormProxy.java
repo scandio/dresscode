@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class FormProxy implements InvocationHandler {
 
-    Map<String, Object> fieldMap;
+    private Map<String, Object> fieldMap;
 
 
     public FormProxy() {
@@ -47,10 +47,10 @@ public class FormProxy implements InvocationHandler {
 
     protected Object createField(Method method) throws Exception {
         ParameterizedType genericReturnType = (ParameterizedType) method.getGenericReturnType();
-        Class inputClass = (Class) genericReturnType.getActualTypeArguments()[0];
+        Class validatorClass = (Class) genericReturnType.getActualTypeArguments()[1];
         Class fieldClass = method.getReturnType();
 
-        Constructor constructor =  fieldClass.getConstructor(Input.class);
-        return constructor.newInstance(inputClass.newInstance());
+        Constructor constructor =  fieldClass.getConstructor(Validator.class);
+        return constructor.newInstance(validatorClass.newInstance());
     }
 }

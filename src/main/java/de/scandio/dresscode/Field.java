@@ -5,13 +5,12 @@ package de.scandio.dresscode;
  *
  * @author Georg Schmidl <georg.schmidl@scandio.de>
  */
-public class Field<T extends Input> {
+public class Field<S, T extends Validator<S>> extends BaseField<T> {
 
-    T input;
-    String raw;
+    private String raw;
 
-    public Field(T input) {
-        this.input = input;
+    public Field(T validator) {
+        super(validator);
     }
 
     public String getRaw() {
@@ -19,15 +18,11 @@ public class Field<T extends Input> {
     }
 
     public void setRaw(String raw) {
-        this.input.put(raw);
+        this.validator.put(raw);
         this.raw = raw;
     }
 
-    public T getInput() {
-        return input;
-    }
-
-    public boolean isValid() {
-        return this.input.isValid();
+    public S getValue() {
+        return this.validator.getValue();
     }
 }
