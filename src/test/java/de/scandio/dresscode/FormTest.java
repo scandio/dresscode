@@ -93,4 +93,15 @@ public class FormTest {
 
         assertEquals(expected, numbers);
     }
+
+    @Test
+    public void testIsValidList() throws Exception {
+        ArticleForm form = Dresscode.create(ArticleForm.class);
+        ListField<Integer, IntegerValidator> numbersField = form.getNumbers();
+        numbersField.setRaw(new String[] {"42", "0", "1"});
+        assertEquals(true, form.isValid());
+
+        numbersField.setRaw(new String[] {"no number", "0", "1"});
+        assertEquals(false, form.isValid());
+    }
 }

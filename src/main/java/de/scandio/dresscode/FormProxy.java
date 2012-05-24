@@ -31,7 +31,7 @@ public class FormProxy implements InvocationHandler {
 
     protected boolean isValid() {
         for (Object field: this.fieldMap.values()) {
-            if (!((Field) field).isValid()) {
+            if (!((BaseField<?>) field).isValid()) {
                 return false;
             }
         }
