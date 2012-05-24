@@ -26,4 +26,8 @@ public class Field<T extends Input> {
     public T getInput() {
         return input;
     }
+
+    public boolean isValid() {
+        return this.input.isValid();
+    }
 }

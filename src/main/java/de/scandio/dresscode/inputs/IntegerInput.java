@@ -10,7 +10,12 @@ import de.scandio.dresscode.Input;
 public class IntegerInput extends Input<Integer> {
     @Override
     protected Integer convert(String string) {
-        // TODO throw exception
-        return Integer.parseInt(string);
+        try {
+            return Integer.parseInt(string);
+        }
+        catch (NumberFormatException e) {
+            addError("convert");
+        }
+        return null;
     }
 }
