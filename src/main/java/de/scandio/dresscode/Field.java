@@ -19,6 +19,7 @@ public class Field<T extends Input> {
     }
 
     public void setRaw(String raw) {
+        this.input.put(raw);
         this.raw = raw;
     }
 
