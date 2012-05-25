@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Dresscode by vicox</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/vicox/dresscode">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/vicox/dresscode/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/vicox/dresscode/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Dresscode</h1>
+          <p></p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/vicox">vicox</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+        </div>
+
+        <p>Dresscode is a form-object based validation framework that is completely independent from your models.</p>
+
+<p><strong>NOTE: Dresscode is not fully implemented yet</strong></p>
+
+<h2>Example</h2>
+
+<h3>Define your Form</h3>
+
+<pre><code>public interface ArticleForm() {
+
+    @Length(200)                                            // max length of 200
+    @Required                                               // requred
+    Field&lt;String, TextValidator&gt; getTitle();                // normal String input
+
+    Field&lt;String, TextValidator&gt; getContent();              // unrestricted
+
+    ListField&lt;String, TextValidator&gt; getCategories();       // multi select input
+
+    Field&lt;Boolean, BooleanValidator&gt; getSendToTwitter();    // checkbox
+
+    @Format("YYYY-MM-DD")                                   // date format
+    Field&lt;Date, DateValidator&gt; getPublishDate();            // date field
+
+    @Required(3)                                            // minimum of 3 tags required
+    FieldList&lt;String, TextValidator&gt; getTags();             // list of strings
+
+    Field&lt;String, EmailValidator&gt; getEmail();               // Email
+
+    @Min(42) @Max(42)
+    Field&lt;IntegerValidator&gt; getAnswerToLifeTheUniverseAndEverything();
+}
+</code></pre>
+
+<h3>Usage in controller</h3>
+
+<pre><code>public class ArticleController {
+
+    // create article action
+    public String createArticle(Request request) {
+        // crete a new article form
+        ArticleForm form = Dresscode.create(ArticleForm.class);
+
+        // set category options
+        form.getCategories().setOptions(Categories.getAll());
+        // set the default selected category
+        form.getCategories().setValue("default");
+
+        return CoolTemplateEngine.render("createarticle.template", form);
+    }
+
+    // save article action
+    public String saveArticle(Request request) {
+        // create an article form filled from request parameters
+        ArticleForm form = Dresscode.fromRequest(ArticleForm.class, request);
+
+        if (form.isValid()) { // validate
+            // create article entity from form (not scope of Dresscode)
+            Article article = entityManager.fromForm(Article.class, form);
+            article.save();
+            return CoolTemplateEngine.render("success.template");
+        } else {
+            // form has errors. return to sender.
+            return CoolTemplateEngine.render("createarticle.template", form);
+        }
+    }
+}
+</code></pre>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+    
+  </body>
+</html>
