@@ -37,7 +37,7 @@ public class FormInvocationHandler implements InvocationHandler {
         for (Method fieldMethod: formClass.getDeclaredMethods()) {
             if (fieldMethod.getName().startsWith("get")) {
                 Object field = handleGetter(fieldMethod);
-                if (!((BaseField<?>) field).isValid()) {
+                if (!((BaseField<?, ?>) field).isValid()) {
                     return false;
                 }
             }
