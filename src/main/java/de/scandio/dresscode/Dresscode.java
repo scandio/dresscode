@@ -13,7 +13,7 @@ import java.util.Map;
 public class Dresscode {
 
     public static <T extends Form> T create(Class<T> formClass) {
-        return (T) Proxy.newProxyInstance(formClass.getClassLoader(), new Class[]{formClass}, new FormProxy());
+        return (T) Proxy.newProxyInstance(formClass.getClassLoader(), new Class[]{formClass}, new FormInvocationHandler(formClass));
     }
 
     public static <T extends Form> T fromRequest(Class<T> formClass, ServletRequest request) throws Exception {

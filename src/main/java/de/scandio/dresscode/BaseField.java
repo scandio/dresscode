@@ -5,7 +5,7 @@ package de.scandio.dresscode;
  *
  * @author Georg Schmidl <georg.schmidl@scandio.de>
  */
-public class BaseField<T extends Validator> {
+public class BaseField<T extends Validator<?>> {
 
     protected T validator;
 

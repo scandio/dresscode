@@ -104,4 +104,22 @@ public class FormTest {
         numbersField.setRaw(new String[] {"no number", "0", "1"});
         assertEquals(false, form.isValid());
     }
+
+    @Test
+    public void testRequired() throws Exception {
+        Map<String, String[]> params = new HashMap<String, String[]>();
+        params.put("number", new String[] {"42"});
+
+        ServletRequest request = mock(ServletRequest.class);
+        when(request.getParameterMap()).thenReturn(params);
+
+        ArticleForm form = Dresscode.fromRequest(ArticleForm.class, request);
+
+        assertEquals(false, form.isValid());
+
+        params.put("title", new String[] {"Test"});
+        form = Dresscode.fromRequest(ArticleForm.class, request);
+
+        assertEquals(true, form.isValid());
+    }
 }

@@ -1,9 +1,9 @@
 package de.scandio.dresscode;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import de.scandio.dresscode.annotations.Required;
+
+import java.lang.annotation.Annotation;
+import java.util.*;
 
 /**
  * TODO: description
@@ -14,9 +14,14 @@ public abstract class Validator<T> {
 
     private List<T> values;
 
+    private Map<Class<?>, Annotation> annotations;
+
     private Set<String> errors;
 
+    private boolean valueSet;
+
     protected Validator() {
+        this.annotations = new HashMap<Class<?>, Annotation>();
         this.errors = new HashSet<String>();
     }
 
@@ -34,6 +39,18 @@ public abstract class Validator<T> {
         this.values.add(value);
     }
 
+    protected void setAnnotations(Annotation[] annotations) {
+        if (annotations != null) {
+            for (Annotation annotation: annotations) {
+                this.annotations.put(annotation.annotationType(), annotation);
+            }
+        }
+    }
+
+    public Annotation getAnnotation(Class<?> annotationClass) {
+        return this.annotations.get(annotationClass);
+    }
+
     protected List<T> getValues() {
         return this.values;
     }
@@ -47,18 +64,34 @@ public abstract class Validator<T> {
     }
 
     protected boolean isValid() {
+        if(!this.valueSet) {
+            if (getAnnotation(Required.class) != null) {
+                Required required = (Required) getAnnotation(Required.class);
+                if (required.value() > 0) {
+                    addError("required");
+                }
+            }
+        }
         return this.errors.isEmpty();
     }
 
     protected void put(String string) {
         setValue(convert(string));
+        validate();
+        this.valueSet =  true;
     }
 
     protected void putArray(String[] strings) {
         setValues(convertArray(strings));
+        validateArray();
+        this.valueSet = true;
     }
 
     protected abstract T convert(String string);
 
     protected abstract List<T> convertArray(String[] strings);
+
+    protected abstract void validate();
+
+    protected abstract void validateArray();
 }
