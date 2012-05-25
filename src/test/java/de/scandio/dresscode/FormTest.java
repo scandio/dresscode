@@ -98,6 +98,8 @@ public class FormTest {
     public void testIsValidList() throws Exception {
         ArticleForm form = Dresscode.create(ArticleForm.class);
         ListField<Integer, IntegerValidator> numbersField = form.getNumbers();
+        form.getTitle().setRaw("required");
+
         numbersField.setRaw(new String[] {"42", "0", "1"});
         assertEquals(true, form.isValid());
 
