@@ -1,6 +1,7 @@
 package de.scandio.dresscode;
 
 import javax.servlet.ServletRequest;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Map;
@@ -16,7 +17,7 @@ public class Dresscode {
         return (T) Proxy.newProxyInstance(formClass.getClassLoader(), new Class[]{formClass}, new FormInvocationHandler(formClass));
     }
 
-    public static <T extends Form> T fromRequest(Class<T> formClass, ServletRequest request) throws Exception {
+    public static <T extends Form> T fromRequest(Class<T> formClass, ServletRequest request) {
         Map<String, String[]> parameterMap = request.getParameterMap();
 
         T form = create(formClass);
@@ -26,9 +27,13 @@ public class Dresscode {
                 String parameterName = getParameterName(method.getName());
 
                 if (parameterMap.containsKey(parameterName)) {
-                    Object field = method.invoke(form);
-                    if (field instanceof Field) {
-                        ((Field) field).setRaw(parameterMap.get(parameterName)[0]);
+                    try {
+                        Object field = method.invoke(form);
+                        if (field instanceof Field) {
+                            ((Field) field).setRaw(parameterMap.get(parameterName)[0]);
+                        }
+                    } catch (Exception e) {
+                        continue;
                     }
                 }
             }
