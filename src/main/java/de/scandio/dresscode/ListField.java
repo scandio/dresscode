@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author Georg Schmidl <georg.schmidl@scandio.de>
  */
-public class ListField<S, T extends Validator<S>> extends BaseField<T> {
+public class ListField<S, T extends Validator<S>> extends BaseField<S, T> {
 
     private String[] raw;
 
