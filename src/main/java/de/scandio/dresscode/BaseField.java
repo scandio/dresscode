@@ -1,5 +1,7 @@
 package de.scandio.dresscode;
 
+import java.util.Set;
+
 /**
  * TODO: description
  *
@@ -15,5 +17,9 @@ public class BaseField<T extends Validator<?>> {
 
     public boolean isValid() {
         return this.validator.isValid();
+    }
+
+    public Set<String> getErrors() {
+        return this.validator.getErrors();
     }
 }

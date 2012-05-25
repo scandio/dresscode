@@ -63,6 +63,10 @@ public abstract class Validator<T> {
         this.errors.add(error);
     }
 
+    protected Set<String> getErrors() {
+        return errors;
+    }
+
     protected boolean isValid() {
         if(!this.valueSet) {
             if (getAnnotation(Required.class) != null) {
