@@ -11,23 +11,23 @@ Example
 
     public interface ArticleForm() {
 
-    	@Length(200)											// max length of 200
-        @Required												// requred
-        Field<String, TextValidator> getTitle(); 				// normal String input
+    	@Length(200)                                            // max length of 200
+        @Required                                               // requred
+        Field<String, TextValidator> getTitle();                // normal String input
 
-        Field<String, TextValidator> getContent();				// unrestricted
+        Field<String, TextValidator> getContent();              // unrestricted
 
-        ListField<String, TextValidator> getCategories();		// multi select input
+        ListField<String, TextValidator> getCategories();       // multi select input
 
-        Field<Boolean, BooleanValidator> getSendToTwitter();	// checkbox
+        Field<Boolean, BooleanValidator> getSendToTwitter();    // checkbox
 
-        @Format("YYYY-MM-DD")									// date format
-        Field<Date, DateValidator> getPublishDate();					// date field
+        @Format("YYYY-MM-DD")                                   // date format
+        Field<Date, DateValidator> getPublishDate();            // date field
 
-        @Required(3)					 						// minimum of 3 tags required
-        FieldList<String, TextValidator> getTags();				// list of strings
+        @Required(3)                                            // minimum of 3 tags required
+        FieldList<String, TextValidator> getTags();             // list of strings
 
-        Field<String, EmailValidator> getEmail();				// Email
+        Field<String, EmailValidator> getEmail();               // Email
 
         @Min(42) @Max(42)
         Field<IntegerValidator> getAnswerToLifeTheUniverseAndEverything();
